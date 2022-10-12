@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Newsitem from "./Newsitem";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 
 export class News extends Component {
@@ -27,30 +27,39 @@ export class News extends Component {
   }
 
   previousBtn = async ()=>{
+    this.props.changeProgress(10);
     let getUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=c3fbbcac7dad4b859db5ea9eca2edbf2&pageSize=${this.props.pageSize}&page=${ this.state.page - 1}`;
     let value = await fetch(getUrl);
     let data = await value.json();
+    this.props.changeProgress(40);
     this.setState({
       articles: data.articles,
       page: this.state.page-1
     });
+    this.props.changeProgress(100);
   }
 
   nextBtn = async ()=>{
+    this.props.changeProgress(10);
     let getUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=c3fbbcac7dad4b859db5ea9eca2edbf2&pageSize=${this.props.pageSize}&page=${ this.state.page + 1}`;
     let value = await fetch(getUrl);
     let data = await value.json();
+    this.props.changeProgress(40);
     this.setState({ 
       articles: data.articles,
       page: this.state.page+1
     });
+    this.props.changeProgress(100);
   }
 
   async componentDidMount(){
+    this.props.changeProgress(10);
     let getUrl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=c3fbbcac7dad4b859db5ea9eca2edbf2&pageSize=${this.props.pageSize}&page=1`;
     let value = await fetch(getUrl);
     let data = await value.json();
+    this.props.changeProgress(40);
     this.setState({ articles: data.articles });
+    this.props.changeProgress(100);
   }
 
 
